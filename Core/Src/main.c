@@ -110,6 +110,8 @@ int main(void)
     /* USER CODE END WHILE */
     lv_timer_handler(); // 处理 LVGL 任务（动画、刷新、事件等）
     HAL_Delay(5);       // 建议 5~10ms，让出 CPU 给低优先级任务
+
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
