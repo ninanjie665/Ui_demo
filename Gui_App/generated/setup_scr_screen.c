@@ -167,7 +167,7 @@ void setup_scr_screen(lv_ui *ui)
 
     //Write codes screen_title_text
     ui->screen_title_text = lv_label_create(ui->screen);
-    lv_label_set_text(ui->screen_title_text, "\n艾莉丝正在待命");
+    lv_label_set_text(ui->screen_title_text, "灯已打开关闭\n艾莉丝正在待命");
     lv_label_set_long_mode(ui->screen_title_text, LV_LABEL_LONG_WRAP);
     lv_obj_set_pos(ui->screen_title_text, 45, 30);
     lv_obj_set_size(ui->screen_title_text, 230, 45);

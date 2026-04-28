@@ -20,14 +20,13 @@
 #include "main.h"
 #include "spi.h"
 #include "gpio.h"
-#include "gui_guider.h"
-#include "lv_port_disp.h"
-#include "lvgl.h"
-#include "st7789v.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "gui_guider.h"
+#include "st7789v.h"
+#include "lvgl.h"
+#include "lv_port_disp.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,14 +92,20 @@ int main(void)
   MX_GPIO_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
+  HAL_SPI_Transmit_DMA(&hspi1, NULL, 0);
   LCD_Init();
+
+
   lv_init();
   lv_port_disp_init();
 
   lv_ui guider_ui;
   setup_ui(&guider_ui);
+  lv_label_set_text_fmt(guider_ui.screen_title_text,"\n在");
+  HAL_Delay(100);
+  lv_label_set_text_fmt(guider_ui.screen_title_text,"\n灯已打开");
 
-
+  int i = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -108,10 +113,16 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    lv_timer_handler(); // 处理 LVGL 任务（动画、刷新、事件等）
-    HAL_Delay(5);       // 建议 5~10ms，让出 CPU 给低优先级任务
+    lv_task_handler(); // LVGL 任务
+    HAL_Delay(5);
 
 
+    lv_label_set_text_fmt(guider_ui.screen_humidity_label,"%d",i);
+    i++;
+
+    if (i == 100) {
+      i = 0;
+    }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

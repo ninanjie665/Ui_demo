@@ -141,7 +141,6 @@ void lv_port_disp_init(void)
 static void disp_init(void)
 {
     /*You code here*/
-    LCD_Init();
 }
 
 volatile bool disp_flush_enabled = true;
@@ -165,10 +164,27 @@ void disp_disable_update(void)
  *'lv_disp_flush_ready()' has to be called when finished.*/
 static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p)
 {
-    LCD_Flush_DMA(disp_drv, area,color_p);
+    LCD_Set_Window(area->x1, area->y1, area->x2, area->y2);
 
-    /*IMPORTANT!!!
-     *Inform the graphics library that you are ready with the flushing*/
+    LCD_DC_HIGH();
+    LCD_CS_LOW();
+
+    // 把LVGL的图像数据发给屏幕（和LCD_Fill原理一样）
+    int32_t w = area->x2 - area->x1 + 1;
+    int32_t h = area->y2 - area->y1 + 1;
+
+    for(int i=0; i<w*h; i++){
+        // 发送RGB565颜色（高低字节）
+        SPI_SendByte(color_p->full & 0xFF);
+        SPI_SendByte(color_p->full >> 8);
+
+        color_p++;
+    }
+
+    LCD_CS_HIGH();
+
+    // 刷新完成
+    lv_disp_flush_ready(disp_drv);
 
 }
 

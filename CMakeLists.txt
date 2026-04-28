@@ -37,11 +37,11 @@ file(GLOB_RECURSE MY_SOURCES
 
 # LVGL 核心源码（排除 demo 和 examples 以减小体积）
 file(GLOB_RECURSE LVGL_SOURCES
-        "Middlewares/LVGL/lvgl/src/*.c"
+        "Middlewares_My/LVGL/lvgl/src/*.c"
 )
 
 file(GLOB_RECURSE LVGL_PORT_SOURCES
-        "Middlewares/LVGL/lvgl/porting/lv_port_disp.c"
+        "Middlewares_My/LVGL/lvgl/porting/lv_port_disp.c"
         # 如果有触摸，可添加 lv_port_indev.c
 )
 
@@ -54,9 +54,9 @@ file(GLOB_RECURSE UI_SOURCES
 # 收集所有头文件（仅用于 IDE 索引，不参与编译）
 file(GLOB_RECURSE PROJECT_HEADERS
         "MyCode/Inc/*.h"
-        "Middlewares/LVGL/lvgl"
-        "Middlewares/LVGL/lvgl/src/*.h"
-        "Middlewares/LVGL/lvgl/porting/*.h"
+        "Middlewares_My/LVGL/lvgl"
+        "Middlewares_My/LVGL/lvgl/src/*.h"
+        "Middlewares_My/LVGL/lvgl/porting/*.h"
         "Gui_App/generated/*.h"
         "Gui_App/custom/*.h"
 )
@@ -89,10 +89,10 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         MyCode/Inc
 
         # LVGL 核心 + 配置文件路径（确保 lv_conf.h 能被找到）
-        Middlewares/LVGL
-        Middlewares/LVGL/lvgl
-        Middlewares/LVGL/lvgl/src
-        Middlewares/LVGL/lvgl/porting
+        Middlewares_My/LVGL
+        Middlewares_My/LVGL/lvgl
+        Middlewares_My/LVGL/lvgl/src
+        Middlewares_My/LVGL/lvgl/porting
 
         # GUI Guider UI 头文件
         Gui_App/generated
